@@ -1,0 +1,28 @@
+#!/bin/bash
+
+while [ 1 ]
+
+do
+
+MEEP1=$(hcitool scan|grep -c "<DEVICE MAC ADDRESS>")    #Device mac address that you want to unlock your computer
+
+if [ "$MEEP1" = "1" ];                                  #When Device is found
+then 
+	screendeact=$(gnome-screensaver-command -q|grep -c "The screensaver is active")
+	if [ "$screendeact" = "1" ];
+	then
+	 	echo "device found"
+		gnome-screensaver-command -d
+	fi
+else                                                  
+	screenact=$(gnome-screensaver-command -q|grep -c "The screensaver is inactive")
+	if [ "$screenact" = "1" ];
+	then
+		echo "device not found"
+		gnome-screensaver-command -l
+	fi
+fi
+
+sleep 10
+
+done
